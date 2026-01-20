@@ -1,0 +1,465 @@
+@import "tailwindcss";
+
+/* ==========================================
+   TAILWIND V4 THEME CONFIGURATION
+   ========================================== */
+
+@theme {
+  /* Font Families */
+  --font-family-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Brand Colors */
+  --color-brand-pink: #d4418e;
+  --color-brand-pink-hover: #c23a7f;
+  
+  --color-brand-blue: #0652c5;
+  --color-brand-blue-hover: #0548a8;
+  
+  --color-brand-teal: #2596be;
+  
+  --color-brand-purple: #973894;
+  
+  /* Additional Purple Shades */
+  --color-tertiary-purple: #655997;
+  --color-primary-purple: #7A2FF0;
+  --color-primary-pink: #E23DAD;
+  
+  /* Semantic Text Colors */
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #6b7280;
+  --color-text-white: #ffffff;
+  
+  /* Border Colors */
+  --color-border-light: #e5e7eb;
+  --color-border-medium: #d1d5db;
+  
+  /* Background Colors */
+  --color-bg-gray-lighter: #f1f5f9;
+  
+  /* Gradient Colors */
+  --color-gradient-primary: linear-gradient(to right, var(--color-brand-pink), var(--color-brand-blue));
+  --color-gradient-primary-hover: linear-gradient(to right, var(--color-brand-pink-hover), var(--color-brand-blue-hover));
+  
+  /* Full Spectrum Gradient - For headers and titles */
+  --gradient-full: linear-gradient(to right, var(--color-brand-teal), var(--color-tertiary-purple), var(--color-primary-purple), var(--color-primary-pink));
+  
+  /* Standard Text Gradient */
+  --color-gradient-text: var(--gradient-full);
+  
+  --color-gradient-page: linear-gradient(to bottom, #f8fafc, #ffffff, #e2e8f0);
+  
+  /* Footer Gradients */
+  --color-gradient-reliance: linear-gradient(to right, #0652c5, #2596be);
+  --color-gradient-corporation: linear-gradient(to right, #973894, #d4418e);
+  --color-gradient-divider-reverse: linear-gradient(to right, #0652c5, #973894);
+  
+  /* Glass Background */
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  --shadow-glass-hover: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+}
+
+/* ==========================================
+   GLOBAL STYLES
+   ========================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================
+   CUSTOM UTILITY CLASSES
+   ========================================== */
+
+/* Text Utilities */
+.text-primary {
+  color: var(--color-text-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-tertiary {
+  color: var(--color-text-tertiary);
+}
+
+/* Brand Text Colors */
+.text-brand-pink {
+  color: var(--color-brand-pink);
+}
+
+.text-brand-blue {
+  color: var(--color-brand-blue);
+}
+
+.text-brand-teal {
+  color: var(--color-brand-teal);
+}
+
+.text-brand-purple {
+  color: var(--color-brand-purple);
+}
+
+/* Text Gradient - For headings */
+.text-gradient {
+  background: var(--gradient-full);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Footer Text Gradients */
+.text-gradient-reliance {
+  background: var(--color-gradient-reliance);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-corporation {
+  background: var(--color-gradient-corporation);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Background Gradient Utilities */
+.bg-gradient-page {
+  background: var(--color-gradient-page);
+}
+
+/* Border Colors */
+.border-light {
+  border-color: var(--color-border-light);
+}
+
+/* Button Utilities */
+.btn-primary {
+  background: var(--color-gradient-primary);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  background: var(--color-gradient-primary-hover);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-brand-blue);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-border-light);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background: transparent;
+  border-color: var(--color-brand-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(6, 82, 197, 0.15);
+}
+
+/* Card Utilities */
+.card-glass {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-glass);
+  transition: all 0.3s ease;
+}
+
+.card-glass:hover {
+  box-shadow: var(--shadow-glass-hover);
+}
+
+/* Container */
+.container-custom {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* ==========================================
+   HERO BACKGROUND ANIMATIONS
+   ========================================== */
+
+/* Animated gradient mesh */
+@keyframes meshMove {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+.mesh-bg {
+  background: linear-gradient(
+    45deg,
+    rgba(212, 65, 142, 0.1) 0%,
+    rgba(6, 82, 197, 0.1) 25%,
+    rgba(37, 150, 190, 0.1) 50%,
+    rgba(151, 56, 148, 0.1) 75%,
+    rgba(212, 65, 142, 0.1) 100%
+  );
+  background-size: 400% 400%;
+  animation: meshMove 15s ease infinite;
+}
+
+/* Animated grid */
+@keyframes gridPan {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+.animated-grid {
+  background-image: radial-gradient(circle, rgba(6, 82, 197, 0.15) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridPan 20s linear infinite;
+}
+
+/* Gradient blobs */
+@keyframes blobFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.gradient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: blobFloat 20s ease-in-out infinite;
+}
+
+.blob-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(212, 65, 142, 0.2), transparent);
+  top: -10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.blob-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(6, 82, 197, 0.2), transparent);
+  top: 40%;
+  right: 15%;
+  animation-delay: 5s;
+}
+
+.blob-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(37, 150, 190, 0.15), transparent);
+  bottom: -20%;
+  left: 30%;
+  animation-delay: 10s;
+}
+
+/* Wave animations */
+@keyframes waveMove1 {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-25px) translateY(-10px);
+  }
+}
+
+@keyframes waveMove2 {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(25px) translateY(-15px);
+  }
+}
+
+@keyframes waveMove3 {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-20px) translateY(-8px);
+  }
+}
+
+.wave-svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+/* Static waves - no animation */
+.wave-static-1,
+.wave-static-2,
+.wave-static-3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+.wave-1 {
+  animation: waveMove1 12s ease-in-out infinite;
+}
+
+.wave-2 {
+  animation: waveMove2 15s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.wave-3 {
+  animation: waveMove3 18s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+/* Floating shapes */
+@keyframes floatShape {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+  }
+}
+
+.floating-shape {
+  position: absolute;
+  opacity: 0.08;
+}
+
+.shape-circle-1 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-brand-pink), var(--color-brand-purple));
+  top: 15%;
+  right: 20%;
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+.shape-square-1 {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-teal));
+  top: 60%;
+  left: 15%;
+  animation: floatShape 10s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.shape-triangle-1 {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 90px solid var(--color-brand-teal);
+  top: 35%;
+  right: 35%;
+  animation: floatShape 12s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+.shape-circle-2 {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-blue));
+  bottom: 20%;
+  right: 10%;
+  animation: floatShape 14s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.shape-square-2 {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--color-brand-pink), var(--color-brand-teal));
+  bottom: 15%;
+  left: 25%;
+  animation: floatShape 9s ease-in-out infinite;
+  animation-delay: 3s;
+}
