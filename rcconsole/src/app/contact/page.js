@@ -10,10 +10,51 @@ export default function ContactUs() {
     message: "",
   });
 
-  const handleSubmit = (e) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState({ type: null, text: "" });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted:", formData);
+    setIsLoading(true);
+    setStatusMessage({ type: null, text: "" });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatusMessage({
+          type: "success",
+          text: "Thank you for contacting us! We'll get back to you soon.",
+        });
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        setStatusMessage({
+          type: "error",
+          text: data.error || "Something went wrong. Please try again.",
+        });
+      }
+    } catch (error) {
+      setStatusMessage({
+        type: "error",
+        text: "Network error. Please check your connection and try again.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -106,6 +147,18 @@ export default function ContactUs() {
             {/* Right Side - Contact Form */}
             <div className="bg-white rounded-2xl p-6 pb-8 shadow-lg border border-gray-100 mt-28">
               <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Status Message */}
+                {statusMessage.type && (
+                  <div
+                    className={`p-4 rounded-lg ${
+                      statusMessage.type === "success"
+                        ? "bg-green-50 text-green-800 border border-green-200"
+                        : "bg-red-50 text-red-800 border border-red-200"
+                    }`}
+                  >
+                    <p className="font-medium">{statusMessage.text}</p>
+                  </div>
+                )}
                 {/* First Name and Last Name */}
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -119,8 +172,9 @@ export default function ContactUs() {
                       value={formData.firstName}
                       onChange={handleChange}
                       placeholder="Enter your first name..."
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-primary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-primary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       required
+                      disabled={isLoading}
                     />
                   </div>
                   <div>
@@ -134,8 +188,9 @@ export default function ContactUs() {
                       value={formData.lastName}
                       onChange={handleChange}
                       placeholder="Enter your last name..."
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-primary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-primary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       required
+                      disabled={isLoading}
                     />
                   </div>
                 </div>
@@ -145,16 +200,17 @@ export default function ContactUs() {
                   <label htmlFor="email" className="block text-base font-medium text-primary mb-2">
                     Email
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email address..."
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-primary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all"
-                    required
-                  />
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Enter your email address..."
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-primary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      required
+                      disabled={isLoading}
+                    />
                 </div>
 
                 {/* Message */}
@@ -162,28 +218,42 @@ export default function ContactUs() {
                   <label htmlFor="message" className="block text-lg font-medium text-primary mb-2">
                     How can we help you?
                   </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell us about your payroll needs or ask any questions..."
-                    rows={5}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-primary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all resize-none"
-                    required
-                  />
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Tell us about your payroll needs or ask any questions..."
+                      rows={5}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-primary placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                      required
+                      disabled={isLoading}
+                    />
                 </div>
 
                 {/* Submit Button */}
                 <div className="flex justify-end pt-2">
                   <button 
                     type="submit" 
-                    className="btn-primary flex items-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold"
+                    disabled={isLoading}
+                    className="btn-primary flex items-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <span>Submit Enquiry</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
+                    {isLoading ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Enquiry</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </>
+                    )}
                   </button>
                 </div>
               </form>
